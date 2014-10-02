@@ -50,7 +50,7 @@ public class EISHouseEnv extends AbstractEnvironment {
 		env = new HouseEnv();
 		Parameter gui = parameters.get("gui");
 		boolean guiOff = gui != null && gui instanceof Identifier
-				&& ((Identifier) gui).getValue().equals("gui");
+				&& ((Identifier) gui).getValue().equals("off");
 		env.init(!guiOff);
 
 		setState(EnvironmentState.PAUSED);
