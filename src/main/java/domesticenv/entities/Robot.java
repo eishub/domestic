@@ -59,7 +59,7 @@ public class Robot {
 	@AsAction(name = "hand_in")
 	public void hand_in(String what) {
 
-		if (!what.equals("fridge")) {
+		if (!what.equals("beer")) {
 			throw new IllegalArgumentException("robot can not hand in '" + what
 					+ "'");
 		}
