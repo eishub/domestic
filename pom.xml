@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>eishub</groupId>
 	<artifactId>domestic</artifactId>
-	<version>${version}</version>
+	<version>1.1.0</version>
 	<name>domestic</name>
 	<description>World where robot orders beer and serves it to its master.</description>
 	<url>http://github.com/eishub/domestic/</url>
@@ -18,7 +18,7 @@
 		<url>http://github.com/eishub</url>
 	</organization>
 	<properties>
-		<version>1.0.0</version>
+		<version>${version}</version>
 		<!-- main class reference elements for manifest -->
 		<main.class>EISHouseEnv</main.class>
 		<main.class.package>domesticenv</main.class.package>

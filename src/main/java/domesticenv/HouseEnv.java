@@ -1,5 +1,6 @@
 package domesticenv;
 
+import javax.swing.SwingUtilities;
 
 /**
  * The house env. Contains a model and possibly a view on the model.
@@ -15,20 +16,31 @@ public class HouseEnv {
 	public void init(boolean showGUI) {
 		model = new HouseModel();
 		if (showGUI) {
-			if (view != null) { // in case init is called twice
-				view.setVisible(false);
-				view.dispose();
-			}
-			view = new HouseView(model);
-			model.setView(view);
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					if (view != null) { // in case init is called twice
+						view.setVisible(false);
+						view.dispose();
+					}
+					view = new HouseView(model);
+					model.setView(view);
+
+				}
+			});
 		}
 	}
 
 	public void stop() {
-		if (view != null) {
-			view.setVisible(false);
-			view.dispose();
-		}
-	}
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				if (view != null) {
+					view.setVisible(false);
+					view.dispose();
+				}
 
+			}
+		});
+	}
 }
