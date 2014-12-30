@@ -10,6 +10,8 @@ import java.awt.Graphics;
 /** class that implements the View of Domestic Robot application */
 public class HouseView extends GridWorldView {
 
+	private static final long serialVersionUID = 1L;
+	
 	HouseModel hmodel;
 
 	public HouseView(HouseModel model) {

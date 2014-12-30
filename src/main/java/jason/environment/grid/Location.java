@@ -3,7 +3,10 @@ package jason.environment.grid;
 import java.io.Serializable;
 
 public final class Location implements Serializable {
-    public int x, y;
+
+	private static final long serialVersionUID = 1L;
+	
+	public int x, y;
     
     public Location(int x, int y) {
         this.x = x;

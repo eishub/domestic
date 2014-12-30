@@ -3,7 +3,10 @@ package jason.environment.grid;
 import java.io.Serializable;
 
 public final class Area implements Serializable {
-    public final Location tl, br;
+
+	private static final long serialVersionUID = 1L;
+	
+	public final Location tl, br;
     
     public Area(int topLeftX, int topLeftY, int bottonRightX, int bottonRightY) {
         tl = new Location(topLeftX, topLeftY);
