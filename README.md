@@ -33,7 +33,7 @@ Dependency information
 ```	
 <dependency>
 	<groupId>eishub</groupId>
-	<artifactId>domestic</artifactId>
+	<artifactId>Domestic</artifactId>
 	<version>1.2.1-SNAPSHOT</version>
 </dependency>
 ```
