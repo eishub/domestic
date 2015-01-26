@@ -19,3 +19,21 @@ This is basically the domestic robot as provided with JASON
 see http://jason.sourceforge.net/
 
 But the agent was pulled out of the JASON infrastructure to provide a bare-bones EIS interface implementation.
+
+Dependency information 
+=====================
+
+```
+<repository>
+ <id>eishub-mvn-repo</id>
+ <url>https://raw.github.com/eishub/mvn-repo/master</url>
+</repository>
+```
+	
+```	
+<dependency>
+	<groupId>eishub</groupId>
+	<artifactId>domestic</artifactId>
+	<version>1.2.1-SNAPSHOT</version>
+</dependency>
+```
