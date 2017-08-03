@@ -47,7 +47,7 @@ public class HouseModel extends GridWorldModel {
 	/**
 	 * works ok if fridge already open.
 	 */
-	public void openFridge() {
+	public synchronized void openFridge() {
 		if (!fridgeOpen) {
 			fridgeOpen = true;
 		}
@@ -56,7 +56,7 @@ public class HouseModel extends GridWorldModel {
 	/**
 	 * works ok if fridge already closed.
 	 */
-	public void closeFridge() {
+	public synchronized void closeFridge() {
 		if (fridgeOpen) {
 			fridgeOpen = false;
 		}
@@ -67,7 +67,7 @@ public class HouseModel extends GridWorldModel {
 	 * 
 	 * @param dest
 	 */
-	public void moveTowards(Location dest) {
+	public synchronized void moveTowards(Location dest) {
 		Location r1 = getAgPos(0);
 		if (r1.x < dest.x)
 			r1.x++;
@@ -86,7 +86,7 @@ public class HouseModel extends GridWorldModel {
 		}
 	}
 
-	public void getBeer() {
+	public synchronized void getBeer() {
 		if (!fridgeOpen) {
 			throw new IllegalStateException("can't get beer, fridge is closed");
 		}
@@ -94,8 +94,7 @@ public class HouseModel extends GridWorldModel {
 			throw new IllegalStateException("can't get beer, out of stock");
 		}
 		if (availableBeers <= 0) {
-			throw new IllegalStateException(
-					"can't get beer, already carrying beer");
+			throw new IllegalStateException("can't get beer, already carrying beer");
 		}
 
 		availableBeers--;
@@ -110,7 +109,7 @@ public class HouseModel extends GridWorldModel {
 	 * 
 	 * @param n
 	 */
-	public void addBeer(int n) {
+	public synchronized void addBeer(int n) {
 		// wait 4 seconds to finish "deliver". FIXME this is odd??
 		try {
 			Thread.sleep(4000);
@@ -123,7 +122,7 @@ public class HouseModel extends GridWorldModel {
 			view.update(lFridge.x, lFridge.y);
 	}
 
-	public void handInBeer() {
+	public synchronized void handInBeer() {
 		if (!carryingBeer) {
 			throw new IllegalStateException("bot has no beer in hand");
 		}
@@ -133,7 +132,7 @@ public class HouseModel extends GridWorldModel {
 			view.update(lOwner.x, lOwner.y);
 	}
 
-	public void sipBeer() {
+	public synchronized void sipBeer() {
 		if (sipCount > 0) {
 			sipCount--;
 			if (view != null)
@@ -143,19 +142,19 @@ public class HouseModel extends GridWorldModel {
 		}
 	}
 
-	public Location getRobotLocation() {
+	public synchronized Location getRobotLocation() {
 		return getAgPos(0);
 	}
 
-	public boolean isFridgeOpen() {
+	public synchronized boolean isFridgeOpen() {
 		return fridgeOpen;
 	}
 
-	public int getAvailableBeers() {
+	public synchronized int getAvailableBeers() {
 		return availableBeers;
 	}
 
-	public int getSipCount() {
+	public synchronized int getSipCount() {
 		return sipCount;
 	}
 }
