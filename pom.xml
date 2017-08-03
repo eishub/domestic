@@ -11,10 +11,10 @@
 	
 	
 	<groupId>eishub</groupId>
-	<artifactId>${environmentname}</artifactId>
+	<artifactId>Domestic</artifactId>
 	<version>1.2.0</version>
-	<name>${environmentname}</name>
-	<description>${environmentname} 
+	<name>Domestic</name>
+	<description>Domestic
 
 Home environment where a domestic robot orders beer, cools it and serves it to the owner.</description>
 	<url>http://www.github.com/eishub/${environmentname}</url>
