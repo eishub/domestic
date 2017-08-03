@@ -1,10 +1,6 @@
 domestic
 ========
 
-THIS ENVIRONMENT IS NOT YET WORKING OK.
-
-This is a first commit that works 'almost',  in order to report an issue in dependent project.
-
 A domestic robot has the goal of serving beer to its owner. Its
 mission is quite simple, it just receives some beer requests from the
 owner, goes to the fridge, takes out a bottle of beer, and brings it
