@@ -12,7 +12,7 @@
 	
 	<groupId>eishub</groupId>
 	<artifactId>Domestic</artifactId>
-	<version>1.2.1-SNAPSHOT</version>
+	<version>1.3.0-SNAPSHOT</version>
 	<name>${environmentname}</name>
 	<description>${environmentname} 
 
@@ -66,7 +66,7 @@ Home environment where a domestic robot orders beer, cools it and serves it to t
 		<dependency>
 			<groupId>eishub</groupId>
 			<artifactId>eis</artifactId>
-			<version>0.5.1-SNAPSHOT</version>
+			<version>0.6.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
