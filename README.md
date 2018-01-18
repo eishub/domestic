@@ -30,6 +30,6 @@ Dependency information
 <dependency>
 	<groupId>eishub</groupId>
 	<artifactId>Domestic</artifactId>
-	<version>1.2.1-SNAPSHOT</version>
+	<version>1.3.0</version>
 </dependency>
 ```
