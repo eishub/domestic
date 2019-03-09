@@ -8,18 +8,15 @@
 		<mainclass>domesticenv.EISHouseEnv</mainclass>
 	</properties>
 	
-	
 	<groupId>eishub</groupId>
 	<artifactId>Domestic</artifactId>
-	<version>1.3.1-SNAPSHOT</version>
+	<version>1.3.1</version>
 	<name>${environmentname}</name>
 	<description>${environmentname} 
 
 Home environment where a domestic robot orders beer, cools it and serves it to the owner.</description>
 	<url>http://www.github.com/eishub/${environmentname}</url>
 
-	
-	
 	<licenses>
 		<license>
 			<name>The GNU General Public License, Version 3.0</name>
