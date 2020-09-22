@@ -14,44 +14,33 @@ import eis.iilang.Identifier;
 import eis.iilang.Parameter;
 
 /**
- * The EIS interface for the house environment
- * 
- * @author W.Pasman 2oct2014
- *
+ * The EIS interface for the house environment.
  */
 public class EISHouseEnv extends AbstractEnvironment {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4559965867901684470L;
-
-	HouseEnv env = null;
+	private HouseEnv env = null;
 
 	@Override
-	public void init(Map<String, Parameter> parameters)
-			throws ManagementException {
+	public void init(final Map<String, Parameter> parameters) throws ManagementException {
 		// Prepare the game.
 		reset(parameters);
 
-		// Try creating and registering an entity.
-		try {
-			registerEntity("robot", new Robot(env.model));
-			registerEntity("owner", new Owner(env.model));
-			registerEntity("supermarket", new Supermarket(env.model));
-		} catch (EntityException e) {
+		try { // Try creating and registering the entities.
+			registerEntity("robot", new Robot(this.env.model));
+			registerEntity("owner", new Owner(this.env.model));
+			registerEntity("supermarket", new Supermarket(this.env.model));
+		} catch (final EntityException e) {
 			throw new ManagementException("Could not create an entity", e);
 		}
 	}
 
-	public void reset(Map<String, Parameter> parameters)
-			throws ManagementException {
+	@Override
+	public void reset(final Map<String, Parameter> parameters) throws ManagementException {
 		closeOldEnv();
-		env = new HouseEnv();
-		Parameter gui = parameters.get("gui");
-		boolean guiOff = gui != null && gui instanceof Identifier
-				&& ((Identifier) gui).getValue().equals("off");
-		env.init(!guiOff);
+		this.env = new HouseEnv();
+		final Parameter gui = parameters.get("gui");
+		final boolean guiOff = gui != null && gui instanceof Identifier && ((Identifier) gui).getValue().equals("off");
+		this.env.init(!guiOff);
 
 		setState(EnvironmentState.PAUSED);
 	}
@@ -63,20 +52,19 @@ public class EISHouseEnv extends AbstractEnvironment {
 	}
 
 	private void closeOldEnv() {
-		if (env != null) {
-			env.stop();
-			env = null;
+		if (this.env != null) {
+			this.env.stop();
+			this.env = null;
 		}
 	}
 
 	@Override
-	protected boolean isSupportedByEnvironment(Action arg0) {
+	protected boolean isSupportedByEnvironment(final Action arg0) {
 		return true;
 	}
 
 	@Override
-	protected boolean isSupportedByType(Action arg0, String arg1) {
+	protected boolean isSupportedByType(final Action arg0, final String arg1) {
 		return true;
 	}
-
 }

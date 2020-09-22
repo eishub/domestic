@@ -1,7 +1,5 @@
 package domesticenv.entities;
 
-import jason.environment.grid.Location;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,114 +7,103 @@ import domesticenv.HouseModel;
 import eis.eis2java.annotation.AsAction;
 import eis.eis2java.annotation.AsPercept;
 import eis.eis2java.translation.Filter;
+import jason.environment.grid.Location;
 
 /**
- * 
  * Robot is an EIS entity. Its job is to order beer to get the fridge filled,
  * pick up the beers from the fridge and deliver it to the owner.
- * 
- * 
- * @author W.Pasman 2oct14
- *
  */
 public class Robot {
-	HouseModel house;
+	private final HouseModel house;
 
-	public Robot(HouseModel env) {
-		house = env;
+	public Robot(final HouseModel env) {
+		this.house = env;
 	}
 
 	@AsAction(name = "open")
-	public void open(String what) {
-
-		if (!what.equals("fridge")) {
-			throw new IllegalArgumentException("robot can not open '" + what
-					+ "'");
+	public void open(final String what) {
+		if (what.equals("fridge")) {
+			this.house.openFridge();
+		} else {
+			throw new IllegalArgumentException("robot can not open '" + what + "'");
 		}
-		house.openFridge();
 	}
 
 	@AsAction(name = "get")
-	public void get(String what) {
-
-		if (!what.equals("beer")) {
-			throw new IllegalArgumentException("robot can not get '" + what
-					+ "'");
+	public void get(final String what) {
+		if (what.equals("beer")) {
+			this.house.getBeer();
+		} else {
+			throw new IllegalArgumentException("robot can not get '" + what + "'");
 		}
-		house.getBeer();
 	}
 
 	@AsAction(name = "close")
-	public void close(String what) {
-
-		if (!what.equals("fridge")) {
-			throw new IllegalArgumentException("robot can not close '" + what
-					+ "'");
+	public void close(final String what) {
+		if (what.equals("fridge")) {
+			this.house.closeFridge();
+		} else {
+			throw new IllegalArgumentException("robot can not close '" + what + "'");
 		}
-		house.closeFridge();
 	}
 
 	@AsAction(name = "hand_in")
-	public void hand_in(String what) {
-
-		if (!what.equals("beer")) {
-			throw new IllegalArgumentException("robot can not hand in '" + what
-					+ "'");
+	public void hand_in(final String what) {
+		if (what.equals("beer")) {
+			this.house.handInBeer();
+		} else {
+			throw new IllegalArgumentException("robot can not hand in '" + what + "'");
 		}
-		house.handInBeer();
 	}
 
 	@AsAction(name = "move_towards")
-	public void move_towards(String target) {
-
+	public void move_towards(final String target) {
 		Location dest = null;
 		if (target.equals("fridge")) {
-			dest = house.lFridge;
+			dest = this.house.lFridge;
 		} else if (target.equals("owner")) {
-			dest = house.lOwner;
+			dest = this.house.lOwner;
 		}
-		house.moveTowards(dest);
+		this.house.moveTowards(dest);
 	}
 
 	@AsPercept(name = "at", filter = Filter.Type.ALWAYS, multipleArguments = true)
 	public List<String> at() {
-		Location lRobot = house.getRobotLocation();
-		List<String> params = new ArrayList<String>();
+		final Location lRobot = this.house.getRobotLocation();
+		final List<String> params = new ArrayList<>(2);
 		params.add("robot");
-		if (lRobot.equals(house.lFridge)) {
+		if (lRobot.equals(this.house.lFridge)) {
 			params.add("fridge");
 			return params;
-		}
-		if (lRobot.equals(house.lOwner)) {
+		} else if (lRobot.equals(this.house.lOwner)) {
 			params.add("owner");
 			return params;
+		} else {
+			return null;
 		}
-		return null;
 	}
 
 	@AsPercept(name = "stock", filter = Filter.Type.ALWAYS, multipleArguments = true)
 	public List<Object> stock() {
-
-		if (house.isFridgeOpen()) {
-			List<Object> params = new ArrayList<Object>();
+		if (this.house.isFridgeOpen()) {
+			final List<Object> params = new ArrayList<>(2);
 			params.add("beer");
-			params.add((Integer) house.getAvailableBeers());
+			params.add(this.house.getAvailableBeers());
 			return params;
+		} else {
+			return null; // no percept.
 		}
-
-		return null; // no percept.
 	}
 
 	@AsPercept(name = "has", filter = Filter.Type.ALWAYS, multipleArguments = true)
 	public List<String> has() {
-		if (house.getSipCount() > 0) {
-			List<String> params = new ArrayList<String>();
+		if (this.house.getSipCount() > 0) {
+			final List<String> params = new ArrayList<>(2);
 			params.add("owner");
 			params.add("beer");
 			return params;
+		} else {
+			return null; // no percept.
 		}
-
-		return null; // no percept.
 	}
-
 }

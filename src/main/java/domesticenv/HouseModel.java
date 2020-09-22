@@ -6,24 +6,22 @@ import jason.environment.grid.Location;
 
 /**
  * class that implements the Model of Domestic Robot application.
- * 
+ *
  * Not really a clean interface, as it has a hard link to the view (see the
  * reference to {@link GridWorldView} in {@link GridWorldModel}. This was left
  * as it was in JASON.
  */
 public class HouseModel extends GridWorldModel {
-
 	// constants for the grid objects
 	public static final int FRIDGE = 16;
 	public static final int OWNER = 32;
-
 	// the grid size
-	public static final int GSize = 7;
+	private static final int GSize = 7;
 
-	boolean fridgeOpen = false; // whether the fridge is open
-	boolean carryingBeer = false; // whether the robot is carrying beer
-	int sipCount = 0; // how many sip the owner did
-	int availableBeers = 2; // how many beers are available
+	public boolean fridgeOpen = false; // whether the fridge is open
+	public boolean carryingBeer = false; // whether the robot is carrying beer
+	public int sipCount = 0; // how many sip the owner did
+	public int availableBeers = 2; // how many beers are available
 
 	/**
 	 * these are public targets for the moveTowards action.
@@ -40,16 +38,16 @@ public class HouseModel extends GridWorldModel {
 		setAgPos(0, GSize / 2, GSize / 2);
 
 		// initial location of fridge and owner
-		add(FRIDGE, lFridge);
-		add(OWNER, lOwner);
+		add(FRIDGE, this.lFridge);
+		add(OWNER, this.lOwner);
 	}
 
 	/**
 	 * works ok if fridge already open.
 	 */
 	public synchronized void openFridge() {
-		if (!fridgeOpen) {
-			fridgeOpen = true;
+		if (!this.fridgeOpen) {
+			this.fridgeOpen = true;
 		}
 	}
 
@@ -57,86 +55,90 @@ public class HouseModel extends GridWorldModel {
 	 * works ok if fridge already closed.
 	 */
 	public synchronized void closeFridge() {
-		if (fridgeOpen) {
-			fridgeOpen = false;
+		if (this.fridgeOpen) {
+			this.fridgeOpen = false;
 		}
 	}
 
 	/**
 	 * Let the robot make 1 step towards a position.
-	 * 
+	 *
 	 * @param dest
 	 */
-	public synchronized void moveTowards(Location dest) {
-		Location r1 = getAgPos(0);
-		if (r1.x < dest.x)
+	public synchronized void moveTowards(final Location dest) {
+		final Location r1 = getAgPos(0);
+		if (r1.x < dest.x) {
 			r1.x++;
-		else if (r1.x > dest.x)
+		} else if (r1.x > dest.x) {
 			r1.x--;
-		if (r1.y < dest.y)
+		}
+		if (r1.y < dest.y) {
 			r1.y++;
-		else if (r1.y > dest.y)
+		} else if (r1.y > dest.y) {
 			r1.y--;
+		}
 		setAgPos(0, r1); // move the robot in the grid
 
 		// repaint the fridge and owner locations
-		if (view != null) {
-			view.update(lFridge.x, lFridge.y);
-			view.update(lOwner.x, lOwner.y);
+		if (this.view != null) {
+			this.view.update(this.lFridge.x, this.lFridge.y);
+			this.view.update(this.lOwner.x, this.lOwner.y);
 		}
 	}
 
 	public synchronized void getBeer() {
-		if (!fridgeOpen) {
+		if (!this.fridgeOpen) {
 			throw new IllegalStateException("can't get beer, fridge is closed");
 		}
-		if (availableBeers <= 0) {
+		if (this.availableBeers <= 0) {
 			throw new IllegalStateException("can't get beer, out of stock");
 		}
-		if (availableBeers <= 0) {
+		if (this.availableBeers <= 0) {
 			throw new IllegalStateException("can't get beer, already carrying beer");
 		}
 
-		availableBeers--;
-		carryingBeer = true;
-		if (view != null) {
-			view.update(lFridge.x, lFridge.y);
+		this.availableBeers--;
+		this.carryingBeer = true;
+		if (this.view != null) {
+			this.view.update(this.lFridge.x, this.lFridge.y);
 		}
 	}
 
 	/**
 	 * deliver n beers to the fridge
-	 * 
+	 *
 	 * @param n
 	 */
-	public synchronized void addBeer(int n) {
-		// wait 4 seconds to finish "deliver". FIXME this is odd??
-		try {
+	public synchronized void addBeer(final int n) {
+		try { // wait 4 seconds to finish "deliver". FIXME this is odd??
 			Thread.sleep(4000);
-		} catch (InterruptedException e) {
+		} catch (final InterruptedException e) {
 			e.printStackTrace();
 		}
 
-		availableBeers += n;
-		if (view != null)
-			view.update(lFridge.x, lFridge.y);
+		this.availableBeers += n;
+		if (this.view != null) {
+			this.view.update(this.lFridge.x, this.lFridge.y);
+		}
 	}
 
 	public synchronized void handInBeer() {
-		if (!carryingBeer) {
+		if (!this.carryingBeer) {
 			throw new IllegalStateException("bot has no beer in hand");
 		}
-		sipCount = 10;
-		carryingBeer = false;
-		if (view != null)
-			view.update(lOwner.x, lOwner.y);
+		this.sipCount = 10;
+		this.carryingBeer = false;
+		if (this.view != null) {
+			this.view.update(this.lOwner.x, this.lOwner.y);
+		}
 	}
 
 	public synchronized void sipBeer() {
-		if (sipCount > 0) {
-			sipCount--;
-			if (view != null)
-				view.update(lOwner.x, lOwner.y);
+		if (this.sipCount > 0) {
+			this.sipCount--;
+			if (this.view != null) {
+				this.view.update(this.lOwner.x, this.lOwner.y);
+			}
 		} else {
 			throw new IllegalStateException("owner failed to sip, out of beer!");
 		}
@@ -147,14 +149,14 @@ public class HouseModel extends GridWorldModel {
 	}
 
 	public synchronized boolean isFridgeOpen() {
-		return fridgeOpen;
+		return this.fridgeOpen;
 	}
 
 	public synchronized int getAvailableBeers() {
-		return availableBeers;
+		return this.availableBeers;
 	}
 
 	public synchronized int getSipCount() {
-		return sipCount;
+		return this.sipCount;
 	}
 }

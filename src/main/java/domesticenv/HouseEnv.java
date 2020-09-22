@@ -4,42 +4,30 @@ import javax.swing.SwingUtilities;
 
 /**
  * The house env. Contains a model and possibly a view on the model.
- * 
- * @author W.Pasman 2oct14
- *
  */
 public class HouseEnv {
+	protected HouseModel model = null; // the model of the grid
+	protected HouseView view = null;
 
-	HouseModel model = null; // the model of the grid
-	HouseView view = null;
-
-	public void init(boolean showGUI) {
-		model = new HouseModel();
+	public void init(final boolean showGUI) {
+		this.model = new HouseModel();
 		if (showGUI) {
-			SwingUtilities.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					if (view != null) { // in case init is called twice
-						view.setVisible(false);
-						view.dispose();
-					}
-					view = new HouseView(model);
-					model.setView(view);
-
+			SwingUtilities.invokeLater(() -> {
+				if (HouseEnv.this.view != null) { // in case init is called twice
+					HouseEnv.this.view.setVisible(false);
+					HouseEnv.this.view.dispose();
 				}
+				HouseEnv.this.view = new HouseView(HouseEnv.this.model);
+				HouseEnv.this.model.setView(HouseEnv.this.view);
 			});
 		}
 	}
 
 	public void stop() {
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				if (view != null) {
-					view.setVisible(false);
-					view.dispose();
-				}
-
+		SwingUtilities.invokeLater(() -> {
+			if (HouseEnv.this.view != null) {
+				HouseEnv.this.view.setVisible(false);
+				HouseEnv.this.view.dispose();
 			}
 		});
 	}
