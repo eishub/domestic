@@ -10,26 +10,22 @@ home delivery service) and some rules hard-wired into the robot by
 the Department of Health (in this example this rule defines the limit
 of daily beer consumption).
 
-This is basically the domestic robot as provided with JASON
-
-see http://jason.sourceforge.net/
-
-But the agent was pulled out of the JASON infrastructure to provide a bare-bones EIS interface implementation.
+This is based on the domestic robot as provided with JASON, see http://jason.sourceforge.net
 
 Dependency information 
 =====================
 
 ```
 <repository>
- <id>eishub-mvn-repo</id>
- <url>https://raw.github.com/eishub/mvn-repo/master</url>
+  <id>eishub-mvn-repo</id>
+  <url>https://raw.github.com/eishub/mvn-repo/master</url>
 </repository>
 ```
 	
 ```	
 <dependency>
-	<groupId>eishub</groupId>
-	<artifactId>Domestic</artifactId>
-	<version>1.3.0</version>
+  <groupId>eishub</groupId>
+  <artifactId>Domestic</artifactId>
+  <version>1.4.0</version>
 </dependency>
 ```
